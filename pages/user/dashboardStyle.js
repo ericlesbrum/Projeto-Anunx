@@ -1,6 +1,6 @@
 const container = (theme) => {
     return {
-        p: theme.spacing(8, 0, 6)
+        p: theme
     }
 }
 const buttonAdd = (theme) => {

@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <TemplateDefault>
-        <Container maxWidth="sm" sx={container}>
+        <Container maxWidth="sm" sx={container(theme.spacing(8, 0, 6))}>
           <Typography component="h1" variant='h2' align='center'>
             Menus anúncios
           </Typography>
