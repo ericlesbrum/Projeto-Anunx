@@ -1,11 +1,31 @@
-import { Box, Container, Select, TextField, Typography, Button } from '@mui/material';
+import { DeleteForever } from '@mui/icons-material';
+import { Box, Container, Select, TextField, Typography, Button, IconButton } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { useState } from 'react';
+import { useDropzone } from 'react-dropzone'
 
 import TemplateDefault from '../../src/templates/Default';
-import { box, container, boxContainer } from './publishStyle';
+import { box, container, boxContainer, thumbsWrapper, dropzone, thumb } from './publishStyle';
 
 const Publish = () => {
     const theme = useTheme();
+    const [files, setFiles] = useState([]);
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: 'image/*',
+        onDrop: (acceptedFile) => {
+            const newFiles = acceptedFile.map(file => {
+                return Object.assign(file, {
+                    preview: URL.createObjectURL(file)
+                })
+            })
+
+            setFiles([...files, ...newFiles]);
+        }
+    })
+    const handleRemoveFile = fileName => {
+        const newFileState = files.filter(file => file.name !== fileName);
+        setFiles(newFileState);
+    }
     return (
         <TemplateDefault>
             <Container maxWidth='sm' sx={container(theme.spacing(8, 0, 6))}>
@@ -78,6 +98,36 @@ const Publish = () => {
                     <Typography component="div" variant="body2" color="textPrimary">
                         A primeira imagem é a foto principal do seu anúncio.
                     </Typography>
+                    <Box sx={thumbsWrapper}>
+                        <Box sx={dropzone(theme.palette.background.default)} {...getRootProps()}>
+                            <input {...getInputProps()} />
+                            <Typography variant="body2" color="textPrimary">
+                                Clique para adicionar ou arraste a imagem para aqui.
+                            </Typography>
+                        </Box>
+                        {
+                            files.map((file, index) => ((
+                                <Box
+                                    key={file.name}
+                                    sx={thumb(`${file.preview}`)}>
+                                    {
+                                        index === 0 ?
+                                            <Box className='mainImage'>
+                                                <Typography variant="body" color="secondary">
+                                                    Principal
+                                                </Typography>
+                                            </Box>
+                                            : null
+                                    }
+                                    <Box className="mask">
+                                        <IconButton color='secondary' onClick={() => handleRemoveFile(file.name)}>
+                                            <DeleteForever fontSize='large' />
+                                        </IconButton>
+                                    </Box>
+                                </Box>
+                            )))
+                        }
+                    </Box>
                 </Box>
             </Container>
 
