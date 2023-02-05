@@ -1,5 +1,17 @@
 import { DeleteForever } from '@mui/icons-material';
-import { Box, Container, Select, TextField, Typography, Button, IconButton } from '@mui/material';
+import {
+    Box,
+    Container,
+    Select,
+    TextField,
+    Typography,
+    Button,
+    IconButton,
+    FormControl,
+    InputLabel,
+    OutlinedInput,
+    InputAdornment
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone'
@@ -151,7 +163,26 @@ const Publish = () => {
                         fullWidth />
                 </Box>
             </Container>
-
+            <Container maxWidth='md' sx={boxContainer(theme.spacing(3))}>
+                <Box sx={
+                    box(
+                        theme.palette.background.variant,
+                        theme.spacing(3)
+                    )}
+                >
+                    <Typography component="h6" variant="h6" color="textPrimary">
+                        Preço
+                    </Typography>
+                    <br /><br />
+                    <FormControl variant="outlined" fullWidth>
+                        <InputLabel>Valor</InputLabel>
+                        <OutlinedInput
+                            startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+                            label="Valor"
+                        />
+                    </FormControl>
+                </Box>
+            </Container>
             <Container maxWidth='md' sx={boxContainer(theme.spacing(3))}>
                 <Box sx={
                     box(
