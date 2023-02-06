@@ -1,11 +1,12 @@
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 const Default = ({ children }) => {
     return (
         <>
-            <Header/>  
+            <Header />
             {children}
-            <footer>FOOTER</footer>
+            <Footer />
         </>
     )
 }
