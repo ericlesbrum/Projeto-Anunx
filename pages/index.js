@@ -44,7 +44,7 @@ const Home = () => {
                     </IconButton>
                 </Paper>
             </Container>
-            <Container maxWidth="md" sx={cardGrid(theme.spacing(8, 0, 6))}>
+            <Container maxWidth="lg" sx={cardGrid(theme.spacing(8, 0, 6))}>
                 <Typography component="h2" variant='h4' align='center' color="textPrimary">
                     Destaques
                 </Typography>
