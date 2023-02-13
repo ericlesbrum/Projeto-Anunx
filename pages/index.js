@@ -1,8 +1,9 @@
-import { Paper, Container, IconButton, InputBase, Typography, Button, CardActions, Grid, Card, CardMedia, CardContent } from '@mui/material';
+import { Paper, Container, IconButton, InputBase, Typography, Grid, } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTheme } from '@mui/material/styles';
 
 import TemplateDefault from '../src/templates/Default';
+import Card from '../src/components/Card';
 
 const searchBox = (padding) => {
     return {
@@ -14,11 +15,7 @@ const searchBox = (padding) => {
 }
 const cardGrid = (padding) => {
     return {
-    }
-}
-const classMedia = () => {
-    return {
-        pt: '56%'
+        mt:'50px'
     }
 }
 const Home = () => {
@@ -46,55 +43,28 @@ const Home = () => {
                 <br />
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={4} sm={6}>
-                        <Card>
-                            <CardMedia
-                                image={'https://source.unsplash.com/random'}
-                                title="Titulo imagem"
-                                sx={classMedia}
-                            />
-                            <CardContent>
-                                <Typography variant='h5' component='h2'>
-                                    Produto X
-                                </Typography>
-                                <Typography >
-                                    R$ 60,00
-                                </Typography>
-                            </CardContent>
-                        </Card>
+                        <Card
+                            image={'https://source.unsplash.com/random'}
+                            title="Produto X"
+                            subtitle="R$ 60,00"
+                            actions={null}
+                        />
                     </Grid>
                     <Grid item xs={12} md={4} sm={6}>
-                        <Card>
-                            <CardMedia
-                                image={'https://source.unsplash.com/random'}
-                                title="Titulo imagem"
-                                sx={classMedia}
-                            />
-                            <CardContent>
-                                <Typography variant='h5' component='h2'>
-                                    Produto X
-                                </Typography>
-                                <Typography >
-                                    R$ 60,00
-                                </Typography>
-                            </CardContent>
-                        </Card>
+                        <Card
+                            image={'https://source.unsplash.com/random'}
+                            title="Produto X"
+                            subtitle="R$ 60,00"
+                            actions={null}
+                        />
                     </Grid>
                     <Grid item xs={12} md={4} sm={6}>
-                        <Card>
-                            <CardMedia
-                                image={'https://source.unsplash.com/random'}
-                                title="Titulo imagem"
-                                sx={classMedia}
-                            />
-                            <CardContent>
-                                <Typography variant='h5' component='h2'>
-                                    Produto X
-                                </Typography>
-                                <Typography >
-                                    R$ 60,00
-                                </Typography>
-                            </CardContent>
-                        </Card>
+                        <Card
+                            image={'https://source.unsplash.com/random'}
+                            title="Produto X"
+                            subtitle="R$ 60,00"
+                            actions={null}
+                        />
                     </Grid>
                 </Grid>
             </Container>

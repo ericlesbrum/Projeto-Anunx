@@ -1,12 +1,11 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography } from '@mui/material';
-import TemplateDefault from '../../src/templates/Default';
+import { Button, CardActions, Container, Grid, Typography } from '@mui/material';
 
-import { useTheme } from '@mui/material/styles';
+import TemplateDefault from '../../src/templates/Default';
+import Card from '../../src/components/Card';
 
 import { buttonAdd, classMedia } from './dashboardStyle';
 
 export default function Home() {
-  const theme = useTheme();
 
   return (
     <>
@@ -22,67 +21,49 @@ export default function Home() {
         <Container maxWidth='md'>
           <Grid container spacing={4}>
             <Grid item xs={12} md={4} sm={6}>
-              <Card>
-                <CardMedia
-                  image={'https://source.unsplash.com/random'}
-                  title="Titulo imagem"
-                  sx={classMedia}
-                />
-                <CardContent>
-                  <Typography variant='h5' component='h2'>
-                    Produto X
-                  </Typography>
-                  <Typography >
-                    R$ 60,00
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size='small' color='primary'>Editar</Button>
-                  <Button size='small' color='primary'>Remover</Button>
-                </CardActions>
-              </Card>
+              <Card
+                image={'https://source.unsplash.com/random'}
+                title="Produto X"
+                subtitle="R$ 60,00"
+                actions={
+                  <>
+                    <CardActions>
+                      <Button size='small' color='primary'>Editar</Button>
+                      <Button size='small' color='primary'>Remover</Button>
+                    </CardActions>
+                  </>
+                }
+              />
             </Grid>
             <Grid item xs={12} md={4} sm={6}>
-              <Card>
-                <CardMedia
-                  image={'https://source.unsplash.com/random'}
-                  title="Titulo imagem"
-                  sx={classMedia}
-                />
-                <CardContent>
-                  <Typography variant='h5' component='h2'>
-                    Produto X
-                  </Typography>
-                  <Typography >
-                    R$ 60,00
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size='small' color='primary'>Editar</Button>
-                  <Button size='small' color='primary'>Remover</Button>
-                </CardActions>
-              </Card>
+              <Card
+                image={'https://source.unsplash.com/random'}
+                title="Produto X"
+                subtitle="R$ 60,00"
+                actions={
+                  <>
+                    <CardActions>
+                      <Button size='small' color='primary'>Editar</Button>
+                      <Button size='small' color='primary'>Remover</Button>
+                    </CardActions>
+                  </>
+                }
+              />
             </Grid>
             <Grid item xs={12} md={4} sm={6}>
-              <Card>
-                <CardMedia
-                  image={'https://source.unsplash.com/random'}
-                  title="Titulo imagem"
-                  sx={classMedia}
-                />
-                <CardContent>
-                  <Typography variant='h5' component='h2'>
-                    Produto X
-                  </Typography>
-                  <Typography >
-                    R$ 60,00
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size='small' color='primary'>Editar</Button>
-                  <Button size='small' color='primary'>Remover</Button>
-                </CardActions>
-              </Card>
+              <Card
+                image={'https://source.unsplash.com/random'}
+                title="Produto X"
+                subtitle="R$ 60,00"
+                actions={
+                  <>
+                    <CardActions>
+                      <Button size='small' color='primary'>Editar</Button>
+                      <Button size='small' color='primary'>Remover</Button>
+                    </CardActions>
+                  </>
+                }
+              />
             </Grid>
           </Grid>
         </Container>

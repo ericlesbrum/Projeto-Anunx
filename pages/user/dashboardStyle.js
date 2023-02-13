@@ -4,9 +4,4 @@ const buttonAdd = (theme) => {
         m: '30px auto'
     }
 }
-const classMedia = (theme) => {
-    return {
-        pt:'56%'
-    }
-}
-export { buttonAdd, classMedia }
+export { buttonAdd }
