@@ -1,8 +1,3 @@
-const container = (theme) => {
-    return {
-        p: theme
-    }
-}
 const buttonAdd = (theme) => {
     return {
         display: 'block',
@@ -14,4 +9,4 @@ const classMedia = (theme) => {
         pt:'56%'
     }
 }
-export { container, buttonAdd, classMedia }
+export { buttonAdd, classMedia }

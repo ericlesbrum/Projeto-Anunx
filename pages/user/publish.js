@@ -17,7 +17,7 @@ import { useState } from 'react';
 import { useDropzone } from 'react-dropzone'
 
 import TemplateDefault from '../../src/templates/Default';
-import { box, container, boxContainer, thumbsWrapper, dropzone, thumb } from './publishStyle';
+import { box, boxContainer, thumbsWrapper, dropzone, thumb } from './publishStyle';
 
 const Publish = () => {
     const theme = useTheme();
@@ -40,7 +40,7 @@ const Publish = () => {
     }
     return (
         <TemplateDefault>
-            <Container maxWidth='sm' sx={container(theme.spacing(8, 0, 6))}>
+            <Container maxWidth='sm'>
                 <Typography component="h1" variant="h2" align="center" color="textPrimary">
                     Publicar Anúncio
                 </Typography>

@@ -4,11 +4,6 @@ import { useTheme } from '@mui/material/styles';
 
 import TemplateDefault from '../src/templates/Default';
 
-const searchContainer = (padding) => {
-    return {
-        p: padding
-    }
-}
 const searchBox = (padding) => {
     return {
         display: "flex",
@@ -30,7 +25,7 @@ const Home = () => {
     const theme = useTheme();
     return (
         <TemplateDefault>
-            <Container maxWidth="md" sx={searchContainer(theme.spacing(8, 0, 6))}>
+            <Container maxWidth="md">
                 <Typography component="h1" variant='h3' align='center' color="textPrimary">
                     O que deseja encontrar?
                 </Typography>

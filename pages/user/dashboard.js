@@ -3,7 +3,7 @@ import TemplateDefault from '../../src/templates/Default';
 
 import { useTheme } from '@mui/material/styles';
 
-import { container, buttonAdd, classMedia } from './dashboardStyle';
+import { buttonAdd, classMedia } from './dashboardStyle';
 
 export default function Home() {
   const theme = useTheme();
@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <TemplateDefault>
-        <Container maxWidth="sm" sx={container(theme.spacing(8, 0, 6))}>
+        <Container maxWidth="sm">
           <Typography component="h1" variant='h2' align='center'>
             Menus anúncios
           </Typography>

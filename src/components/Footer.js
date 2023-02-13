@@ -5,7 +5,6 @@ import styled from 'styled-components';
 const footer = (theme) => {
     return {
         borderTop: `1px solid ${theme.palette.divider}`,
-        mt: theme.spacing(8),
         pt: theme.spacing(3),
         pb: theme.spacing(3),
         [theme.breakpoints.up('sm')]: {
