@@ -2,7 +2,7 @@ import { Avatar, Box, Card, CardHeader, CardMedia, Chip, Container, Grid, Typogr
 import { useTheme } from '@mui/material/styles';
 import Carousel from 'react-material-ui-carousel';
 
-import TemplateDefault from '../src/templates/Default';
+import TemplateDefault from '../../src/templates/Default';
 
 const box = (color, spacing) => {
     return {
