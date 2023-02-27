@@ -12,7 +12,8 @@ import {
     OutlinedInput,
     InputAdornment,
     FormHelperText,
-    MenuItem
+    MenuItem,
+    Input
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
@@ -26,7 +27,8 @@ import { box, boxContainer, thumbsWrapper, dropzone, thumb } from './publishStyl
 
 let validateSchema = yup.object({
     title: yup.string().min(6, 'Escreva um título maior').max(100, 'Título muito grande').required('Campo obrigatório'),
-    category: yup.string().required('Campo obrigatório')
+    category: yup.string().required('Campo obrigatório'),
+    description: yup.string().min(50, 'Escreva uma descrição com pelo menos 50  caracteres.').required('Campo obrigatório'),
 });
 
 const Publish = () => {
@@ -56,6 +58,7 @@ const Publish = () => {
                 initialValues={{
                     title: '',
                     category: '',
+                    description: '',
                 }}
                 validationSchema={validateSchema}
                 onSubmit={(values) => {
@@ -89,24 +92,26 @@ const Publish = () => {
                                             theme.spacing(3)
                                         )}
                                     >
-                                        <Typography component="h6" variant="h6" color="textPrimary">
-                                            Título do Anúncio
-                                        </Typography>
-                                        <TextField
-                                            name='title'
-                                            value={values.title}
-                                            onChange={handleChange}
-                                            label="ex.:  Bicileta Aro 18 com garantia"
-                                            size="small"
-                                            fullWidth
-                                            error={errors.title}
-                                            helperText={errors.title}
-                                        />
+                                        <FormControl error={errors.title} fullWidth>
+                                            <InputLabel sx={{
+                                                fontWeight: 400,
+                                                color: theme.palette.primary.main
+                                            }}>Título do Anúncio</InputLabel>
+                                            <Input
+                                                name='title'
+                                                value={values.title}
+                                                onChange={handleChange}
+                                            />
+                                            <FormHelperText>
+                                                {errors.title}
+                                            </FormHelperText>
+                                        </FormControl>
                                         <br /><br />
-                                        <Typography component="h6" variant="h6" color="textPrimary">
-                                            Categoria
-                                        </Typography>
                                         <FormControl error={errors.category} fullWidth>
+                                            <InputLabel sx={{
+                                                fontWeight: 400,
+                                                color: theme.palette.primary.main
+                                            }}>Categoria</InputLabel>
                                             <Select
                                                 name="category"
                                                 value={values.category}
@@ -190,17 +195,21 @@ const Publish = () => {
                                             theme.spacing(3)
                                         )}
                                     >
-                                        <Typography component="h6" variant="h6" color="textPrimary">
-                                            Descrição
-                                        </Typography>
-                                        <Typography component="div" variant="body2" color="textPrimary">
-                                            Escreva os detalhes do que está vendendo
-                                        </Typography>
-                                        <TextField
-                                            multiline
-                                            rows={6}
-                                            variant="outlined"
-                                            fullWidth />
+                                        <FormControl error={errors.description} fullWidth>
+                                            <InputLabel sx={{
+                                                fontWeight: 400,
+                                                color: theme.palette.primary.main
+                                            }}>Escreva os detalhes do que está vendendo</InputLabel>
+                                            <Input
+                                                name='description'
+                                                multiline
+                                                rows={6}
+                                                variant="outlined"
+                                            />
+                                            <FormHelperText>
+                                                {errors.description}
+                                            </FormHelperText>
+                                        </FormControl>
                                     </Box>
                                 </Container>
                                 <Container maxWidth='md' sx={boxContainer(theme.spacing(3))}>
