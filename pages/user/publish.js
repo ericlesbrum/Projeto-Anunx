@@ -11,7 +11,8 @@ import {
     InputLabel,
     OutlinedInput,
     InputAdornment,
-    FormHelperText
+    FormHelperText,
+    MenuItem
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
@@ -105,7 +106,7 @@ const Publish = () => {
                                         <Typography component="h6" variant="h6" color="textPrimary">
                                             Categoria
                                         </Typography>
-                                        <FormControl error={erros.category} fullWidth>
+                                        <FormControl error={errors.category} fullWidth>
                                             <Select
                                                 name="category"
                                                 value={values.category}
