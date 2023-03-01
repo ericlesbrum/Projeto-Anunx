@@ -1,5 +1,16 @@
 import { rgbToHex } from "@mui/material"
 
+const box = (color, padding) => {
+    return {
+        backgroundColor: color,
+        p: padding
+    }
+}
+const boxContainer = (padding) => {
+    return {
+        pb: padding
+    }
+}
 const thumbsWrapper = () => {
     return {
         display: 'flex',
@@ -50,4 +61,4 @@ const thumb = (image) => {
         }
     }
 }
-export {thumbsWrapper, dropzone, thumb }
+export { box, boxContainer, thumbsWrapper, dropzone, thumb }
