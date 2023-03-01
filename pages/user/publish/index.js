@@ -1,11 +1,9 @@
-import { DeleteForever } from '@mui/icons-material';
 import {
     Box,
     Container,
     Select,
     Typography,
     Button,
-    IconButton,
     FormControl,
     InputLabel,
     InputAdornment,
@@ -14,40 +12,20 @@ import {
     Input
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { useDropzone } from 'react-dropzone'
 
 import { Formik } from 'formik';
-import * as yup from 'yup';
 
-import TemplateDefault from '../../src/templates/Default';
-import { box, boxContainer, thumbsWrapper, dropzone, thumb } from './publishStyle';
-
-let validateSchema = yup.object({
-    title: yup.string().min(6, 'Escreva um título maior').max(100, 'Título muito grande').required('Campo obrigatório'),
-    category: yup.string().required('Campo obrigatório'),
-    description: yup.string().min(50, 'Escreva uma descrição com pelo menos 50  caracteres.').required('Campo obrigatório'),
-    price: yup.number().required('Campo obrigatório'),
-    email: yup.string().email("Digite um e-mail válido").required('Campo obrigatório'),
-    name: yup.string().required('Campo obrigatório'),
-    phone: yup.number().required('Campo obrigatório'),
-    files: yup.array().min(1, 'Envie pelo menos uma foto').required('Campo obrigatório'),
-});
+import TemplateDefault from '../../../src/templates/Default';
+import { box, boxContainer } from './styles';
+import { initialValues, validateSchema } from './formValues';
+import FileUpload from '@/src/components/FileUpload';
 
 const Publish = () => {
     const theme = useTheme();
     return (
         <TemplateDefault>
             <Formik
-                initialValues={{
-                    title: '',
-                    category: '',
-                    description: '',
-                    price: '',
-                    email: '',
-                    name: '',
-                    phone: '',
-                    files: [],
-                }}
+                initialValues={initialValues}
                 validationSchema={validateSchema}
                 onSubmit={(values) => {
                     alert(JSON.stringify(values, null, 2));
@@ -64,24 +42,7 @@ const Publish = () => {
                             setFieldValue
                         }
                     ) => {
-                        const { getRootProps, getInputProps } = useDropzone({
-                            accept: {
-                                'image/*': ['.jpeg', '.jpg', '.png'],
-                            },
-                            onDrop: (acceptedFile) => {
-                                const newFiles = acceptedFile.map(file => {
-                                    return Object.assign(file, {
-                                        preview: URL.createObjectURL(file)
-                                    })
-                                })
 
-                                setFieldValue('files', [...values.files, ...newFiles]);
-                            }
-                        })
-                        const handleRemoveFile = fileName => {
-                            const newFileState = values.files.filter(file => file.name !== fileName);
-                            setFieldValue('files', newFileState);
-                        }
                         return (
                             <form onSubmit={handleSubmit}>
                                 <Container maxWidth='sm'>
@@ -157,47 +118,12 @@ const Publish = () => {
                                             theme.spacing(3)
                                         )}
                                     >
-                                        <Typography component="h6" variant="h6" color={errors.files && touched.files ? 'error' : "textPrimary"}>
-                                            Imagens
-                                        </Typography>
-                                        <Typography component="div" variant="body2" color={errors.files && touched.files ? 'error' : "textPrimary"}>
-                                            A primeira imagem é a foto principal do seu anúncio.
-                                        </Typography>
-                                        {
-                                            errors.files && touched.files
-                                                ? <Typography variant='body2' color="error" gutterBottom>{errors.files}</Typography>
-                                                : null
-                                        }
-                                        <Box sx={thumbsWrapper}>
-                                            <Box sx={dropzone(theme.palette.background.default)} {...getRootProps()}>
-                                                <input name='files' {...getInputProps()} />
-                                                <Typography variant="body2" color={errors.files && touched.files ? 'error' : "textPrimary"}>
-                                                    Clique para adicionar ou arraste a imagem para aqui.
-                                                </Typography>
-                                            </Box>
-                                            {
-                                                values.files.map((file, index) => ((
-                                                    <Box
-                                                        key={file.name}
-                                                        sx={thumb(`${file.preview}`)}>
-                                                        {
-                                                            index === 0 ?
-                                                                <Box className='mainImage'>
-                                                                    <Typography variant="body" color="secondary">
-                                                                        Principal
-                                                                    </Typography>
-                                                                </Box>
-                                                                : null
-                                                        }
-                                                        <Box className="mask">
-                                                            <IconButton color='secondary' onClick={() => handleRemoveFile(file.name)}>
-                                                                <DeleteForever fontSize='large' />
-                                                            </IconButton>
-                                                        </Box>
-                                                    </Box>
-                                                )))
-                                            }
-                                        </Box>
+                                        <FileUpload
+                                            files={values.files}
+                                            errors={errors.files}
+                                            touched={touched.files}
+                                            setFieldValue={setFieldValue}
+                                        />
                                     </Box>
                                 </Container>
 
@@ -275,7 +201,7 @@ const Publish = () => {
                                             </FormHelperText>
                                         </FormControl>
                                         <br /><br />
-                                        <FormControl error={errors.email} fullWidth>
+                                        <FormControl error={errors.name && touched.name} fullWidth>
                                             <InputLabel sx={{
                                                 fontWeight: 400,
                                                 color: theme.palette.primary.main
@@ -290,7 +216,7 @@ const Publish = () => {
                                             </FormHelperText>
                                         </FormControl>
                                         <br /><br />
-                                        <FormControl error={errors.phone} fullWidth>
+                                        <FormControl error={errors.name && touched.name} fullWidth>
                                             <InputLabel sx={{
                                                 fontWeight: 400,
                                                 color: theme.palette.primary.main
