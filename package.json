@@ -16,6 +16,7 @@
     "@mui/material": "^5.11.6",
     "@mui/styled-engine-sc": "^5.11.0",
     "@next/font": "13.1.5",
+    "bcrypt": "^5.1.0",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.5",
     "formik": "^2.2.9",
