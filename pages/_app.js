@@ -4,25 +4,29 @@ import Head from 'next/head';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ToastyProvider } from '@/src/contexts/Toasty';
+import { SessionProvider } from "next-auth/react"
 import theme from '../src/theme';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 
-export default function MyApp(props) {
-  const { Component, pageProps } = props;
-
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
     <>
-      <Head>
-        <title>Anunx</title>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <ThemeProvider theme={theme}>
-        <ToastyProvider>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ToastyProvider>
-      </ThemeProvider>
+      <SessionProvider session={session} basePath="/api/auth">
+        <ThemeProvider theme={theme}>
+          <Head>
+            <title>Anunx</title>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+          </Head>
+          <ToastyProvider>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ToastyProvider>
+        </ThemeProvider>
+      </SessionProvider>
     </>
   );
 }

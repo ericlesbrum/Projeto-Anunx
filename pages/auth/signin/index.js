@@ -1,8 +1,9 @@
-import { Box, Button, CircularProgress, Container, FormControl, FormHelperText, Input, InputLabel, Typography } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, Container, FormControl, FormHelperText, Input, InputLabel, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Formik } from 'formik';
-import axios from 'axios';
 import { useRouter } from 'next/router';
+import { signIn, useSession } from 'next-auth/react';
+import axios from 'axios';
 
 import TemplateDefault from '../../../src/templates/Default';
 import { initialValues, validateSchema } from './formValues';
@@ -10,10 +11,14 @@ import useToasty from '@/src/contexts/Toasty';
 
 const Signin = () => {
   const theme = useTheme();
-  const { setToasty } = useToasty();
   const router = useRouter();
 
   const handleFormSubmit = async values => {
+    signIn('credentials', {
+      email: values.email,
+      password: values.password,
+      callbackUrl: 'http://localhost:3000/user/dashboard'
+    })
   };
   return (
     <>
@@ -44,6 +49,13 @@ const Signin = () => {
                   handleSubmit,
                   isSubmitting
                 }) => {
+                  {
+                    router.query.i === '1' ?
+                      <Alert severity="error" sx={{ margin: '20px 0' }}>
+                        Usuario ou senha invalidos
+                      </Alert>
+                      : null
+                  }
                   return (
                     <form onSubmit={handleSubmit}>
                       <FormControl fullWidth error={errors.email && touched.email} sx={{ mb: theme.spacing(1) }}>

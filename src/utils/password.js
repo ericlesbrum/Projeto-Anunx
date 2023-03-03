@@ -5,6 +5,11 @@ const crypto = async (pwd) => {
     const password = await bcrypt.hash(pwd, salt);
     return password
 }
-export{
+const compare = (pwd, hash) => {
+    const result = bcrypt.compare(pwd, hash)
+    return result;
+}
+export {
     crypto,
+    compare
 }
