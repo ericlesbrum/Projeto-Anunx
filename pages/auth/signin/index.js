@@ -3,6 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
 import { signIn, useSession } from 'next-auth/react';
+import Image from 'next/image';
 import axios from 'axios';
 
 import TemplateDefault from '../../../src/templates/Default';
@@ -12,7 +13,13 @@ import useToasty from '@/src/contexts/Toasty';
 const Signin = () => {
   const theme = useTheme();
   const router = useRouter();
+  const session = useSession();
 
+  const handleGoogleLogin = () => {
+    signIn('google', {
+      callbackUrl: 'http://localhost:3000/user/dashboard'
+    })
+  }
   const handleFormSubmit = async values => {
     signIn('credentials', {
       email: values.email,
@@ -35,6 +42,38 @@ const Signin = () => {
                 backgroundColor: theme.palette.background.variant,
                 p: theme.spacing(3)
               }}>
+            <Box display="flex" justifyContent='center'>
+              <Button onClick={handleGoogleLogin}
+                variant='contained'
+                color='primary'
+                startIcon={
+                  <Image
+                    src='/images/logo_google.svg'
+                    width={20}
+                    height={20}
+                    alt='Login com Google'
+                  />
+                }
+              >
+                Entrar com Google
+              </Button>
+            </Box>
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#e8e8e8',
+              width: '100%',
+              height: '1px',
+              margin: theme.spacing(7, 0, 4),
+              '& span': {
+                backgroundColor: 'white',
+                padding: '0 30px'
+              }
+
+            }}>
+              <span>ou</span>
+            </Box>
             <Formik
               initialValues={initialValues}
               validationSchema={validateSchema}
