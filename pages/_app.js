@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ToastyProvider } from '@/src/contexts/Toasty';
 import { SessionProvider } from "next-auth/react"
 import theme from '../src/theme';
+import CheckAuth from '../src/components/CheckAuth';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 
@@ -23,7 +24,11 @@ export default function MyApp({
           </Head>
           <ToastyProvider>
             <CssBaseline />
-            <Component {...pageProps} />
+            {
+              Component.requireAuth
+                ? <CheckAuth Component={Component} pageProps={pageProps} />
+                : <Component {...pageProps} />
+            }
           </ToastyProvider>
         </ThemeProvider>
       </SessionProvider>

@@ -5,7 +5,7 @@ import Card from '../../src/components/Card';
 
 import { buttonAdd, classMedia } from './dashboardStyle';
 
-export default function Home() {
+const Dashboard = () => {
 
   return (
     <>
@@ -71,3 +71,6 @@ export default function Home() {
     </>
   )
 }
+Dashboard.requireAuth = true;
+
+export default Dashboard;
