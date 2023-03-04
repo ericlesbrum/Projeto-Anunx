@@ -7,6 +7,7 @@ import { Avatar, Container, Divider, IconButton, Menu, MenuItem } from '@mui/mat
 import Link from 'next/link'
 import { AccountCircle } from '@mui/icons-material';
 import styled from 'styled-components';
+import { signOut, useSession } from 'next-auth/react';
 
 const StyledLink = styled(Link)`
     text-decoration: none;
@@ -24,7 +25,7 @@ const StyledMenuLink = styled(Link)`
 `;
 const userName = () => {
   return {
-    ml: '6px'
+    ml: '8px'
   }
 }
 
@@ -32,6 +33,8 @@ const userName = () => {
 export default function ButtonAppBar() {
   const [anchorUserMenu, setAnchorUserMenu] = React.useState(false);
   const openUserMenu = Boolean(anchorUserMenu);
+  const session = useSession();
+  console.log(session.data);
   return (
     <>
       <AppBar position="static" elevation={3}>
@@ -40,35 +43,46 @@ export default function ButtonAppBar() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Anunx
             </Typography>
-            <StyledLink href="/user/publish" passHref>
-              <Button color="inherit" variant='outlined'>
+            <StyledLink href={session.data ? '/user/publish' : '/auth/signin'} passHref>
+              <Button color="inherit" variant='outlined' sx={{ marginRight: '10px' }}>
                 Anunciar e Vender
               </Button>
             </StyledLink>
-            <IconButton color='secondary' onClick={(e) => setAnchorUserMenu(e.currentTarget)}>
-              {
-                true === false
-                  ?
-                  <Avatar src='' />
-                  : <AccountCircle />
-              }
-              <Typography sx={userName}>
-                Teste testado
-              </Typography>
-            </IconButton>
+            {
+              session.data ?
+                <IconButton color='secondary' onClick={(e) => setAnchorUserMenu(e.currentTarget)}>
+                  {
+                    session.data
+                      ?
+                      <Avatar src={session.data.user.image} />
+                      : <AccountCircle />
+                  }
+                  <Typography sx={userName}>
+                    {
+                      session.data
+                        ?
+                        session.data.user.name :
+                        null
+                    }
+                  </Typography>
+                </IconButton>
+                : null
+            }
             <Menu
               open={openUserMenu}
               anchorEl={anchorUserMenu}
               onClose={() => setAnchorUserMenu()}
             >
-              <StyledMenuLink href="/user/publish" passHref>
+              <StyledMenuLink href="/user/dashboard" passHref>
                 <MenuItem>Meus anúncios</MenuItem>
               </StyledMenuLink>
               <StyledMenuLink href="/user/publish" passHref>
                 <MenuItem>Publicar novo anúncios</MenuItem>
               </StyledMenuLink>
               <Divider sx={{ m: '8px 0' }} />
-              <MenuItem>Sair</MenuItem>
+              <MenuItem onClick={() => signOut({
+                callbackUrl: '/'
+              })}>Sair</MenuItem>
             </Menu>
           </Toolbar>
         </Container>
