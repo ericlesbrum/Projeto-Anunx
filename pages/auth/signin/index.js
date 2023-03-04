@@ -10,21 +10,21 @@ import TemplateDefault from '../../../src/templates/Default';
 import { initialValues, validateSchema } from './formValues';
 import useToasty from '@/src/contexts/Toasty';
 
-const Signin = () => {
+const Signin = ({ APP_URL }) => {
   const theme = useTheme();
   const router = useRouter();
   const session = useSession();
-  
+
   const handleGoogleLogin = () => {
     signIn('google', {
-      callbackUrl: 'http://localhost:3000/user/dashboard'
+      callbackUrl: `${APP_URL}/user/dashboard`
     })
   }
   const handleFormSubmit = async values => {
     signIn('credentials', {
       email: values.email,
       password: values.password,
-      callbackUrl: 'http://localhost:3000/user/dashboard'
+      callbackUrl: `${APP_URL}/user/dashboard`
     })
   };
   return (
@@ -145,5 +145,10 @@ const Signin = () => {
       </TemplateDefault>
     </>
   )
+}
+Signin.getInitialProps = async function () {
+  return {
+    APP_URL: process.env.APP_URL
+  }
 }
 export default Signin;
