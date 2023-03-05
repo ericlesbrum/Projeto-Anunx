@@ -29,6 +29,23 @@ export const authOptions = {
   jwt: {
     secret: process.env.JWT_TOKEN
   },
+  callbacks: {
+    async jwt({ token, user }) {
+
+      if (user?.id) {
+        token.id = user.id
+      }
+      if (user?.userName) {
+        token.userName = user.userName;
+      }
+      return token
+    },
+    async session({ session, token }) {
+      session.id = token.id;
+      session.userName = token.userName;
+      return session;
+    }
+  },
 
   database: process.env.DATABASE_URL,
 }

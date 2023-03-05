@@ -34,7 +34,6 @@ export default function ButtonAppBar() {
   const [anchorUserMenu, setAnchorUserMenu] = React.useState(false);
   const openUserMenu = Boolean(anchorUserMenu);
   const session = useSession();
-  console.log(session.data);
   return (
     <>
       <AppBar position="static" elevation={3}>
