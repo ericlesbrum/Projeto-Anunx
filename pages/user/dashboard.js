@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 
 import TemplateDefault from '../../src/templates/Default';
 import Card from '../../src/components/Card';
+import { formatCurrency } from '@/src/utils/currency';
 
 import { buttonAdd, classMedia } from './dashboardStyle';
 
@@ -34,7 +35,7 @@ const Dashboard = ({ products }) => {
                   <Card
                     image={`/uploads/${product.files[0].name}`}
                     title={product.title}
-                    subtitle={product.price}
+                    subtitle={formatCurrency(product.price)}
                     actions={
                       <>
                         <CardActions>
