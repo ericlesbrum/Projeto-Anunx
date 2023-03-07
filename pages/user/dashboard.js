@@ -32,15 +32,16 @@ const Dashboard = ({ products }) => {
   const router = useRouter();
   const { setToasty } = useToasty();
   const [productId, setProductId] = useState();
-  const [removedId, setRemovedId] = useState();
+  const [removedId, setRemovedId] = useState([]);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
 
+  console.log(products);
   const handleClose = () => {
     setOpenConfirmModal(false);
   };
 
-  const handleClickRemove = (productId) => {
-    setProductId(productId);
+  const handleClickRemove = (id) => {
+    setProductId(id);
     setOpenConfirmModal(true);
   };
 
@@ -56,12 +57,12 @@ const Dashboard = ({ products }) => {
 
   const handleSuccess = () => {
     handleClose();
+    setRemovedId([...removedId, productId]);
     setToasty({
       open: true,
       text: 'Anúncio removido com sucesso',
       severity: 'success'
     })
-    setRemovedId([...removedId], productId);
   }
 
   const handleError = () => {

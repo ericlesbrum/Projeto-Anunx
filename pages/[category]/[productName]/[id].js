@@ -2,7 +2,10 @@ import { Avatar, Box, Card, CardHeader, CardMedia, Chip, Container, Grid, Typogr
 import { useTheme } from '@mui/material/styles';
 import Carousel from 'react-material-ui-carousel';
 
-import TemplateDefault from '../../src/templates/Default';
+import TemplateDefault from '../../../src/templates/Default';
+import ProductsModel from '../../../src/models/products'
+import dbConnect from '../../../src/utils/dbConnect';
+import { formatCurrency } from '@/src/utils/currency';
 
 const box = (color, spacing) => {
     return {
@@ -11,7 +14,7 @@ const box = (color, spacing) => {
         mb: spacing
     }
 }
-const Product = () => {
+const Product = ({ product }) => {
     const theme = useTheme();
     return (
         <TemplateDefault>
@@ -23,28 +26,27 @@ const Product = () => {
                                 autoPlay={false}
                                 navButtonsProps={{          // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
                                     style: {
-                                        color:'white'
+                                        color: 'white'
                                     }
                                 }}
                             >
-                                <Card sx={{ height: '100%' }}>
-                                    <CardMedia sx={{ p: '30%' }}
-                                        image='https://source.unsplash.com/random'
-                                        title='Titulo Imagem'
-                                    />
-                                </Card>
-                                <Card sx={{ height: '100%' }}>
-                                    <CardMedia sx={{ p: '30%' }}
-                                        image='https://source.unsplash.com/random?a=2'
-                                        title='Titulo Imagem'
-                                    />
-                                </Card>
+                                {
+                                    product.files.map(file => (
+                                        <Card sx={{ height: '100%' }}
+                                            key={file.name}>
+                                            <CardMedia sx={{ p: '30%' }}
+                                                image={`/uploads/${file.name}`}
+                                                title={product.title}
+                                            />
+                                        </Card>
+                                    ))
+                                }
                             </Carousel>
                         </Box>
                         <Box sx={box(theme.palette.background.variant, theme.spacing(3))} textAlign='left'>
                             <Typography component='span' variant='caption'>Publicado 16 junho de 2021</Typography>
-                            <Typography component='h4' variant='h4' sx={{ m: '15px 0' }}>Jaguar XE 2.0 D R-Sport Aut.</Typography>
-                            <Typography component='h4' variant='h4' sx={{ fontWeight: 'bold', mb: '15px' }}>R$ 50.000,00</Typography>
+                            <Typography component='h4' variant='h4' sx={{ m: '15px 0' }}>{product.title}</Typography>
+                            <Typography component='h4' variant='h4' sx={{ fontWeight: 'bold', mb: '15px' }}>{formatCurrency(product.price)}</Typography>
                             <Chip label="Categoria" />
                         </Box>
                         <Box sx={box(theme.palette.background.variant, theme.spacing(3))} textAlign='left'>
@@ -52,7 +54,7 @@ const Product = () => {
                                 Descrição
                             </Typography>
                             <Typography component='p' variant='body2' textAlign='justify'>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam massa lectus, ultrices ac vehicula id, iaculis ac quam. Aenean nec venenatis urna. Vivamus ullamcorper libero tellus, ac vestibulum nibh fermentum et. Phasellus a ante placerat, scelerisque neque non, mollis nisl. Donec pharetra diam varius, consequat ligula quis, egestas nulla. Integer vitae dapibus nunc. Mauris odio nunc, lacinia a vulputate eu, rhoncus sed arcu. In consequat ex nec sem laoreet porta. Phasellus et fringilla nulla. Donec mattis diam at sem malesuada lacinia.
+                                {product.description}
                             </Typography>
                         </Box>
                     </Grid>
@@ -60,14 +62,18 @@ const Product = () => {
                         <Card elevation={0} sx={box(theme.palette.background.variant, theme.spacing(3))}>
                             <CardHeader
                                 avatar={
-                                    <Avatar>T</Avatar>
+                                    <Avatar src={product.user.image}>
+                                        {
+                                            product.user.image || product.user.name[0]
+                                        }
+                                    </Avatar>
                                 }
-                                title="Dev Webson"
-                                subheader="thiago@email.com"
+                                title={product.user.name}
+                                subheader={product.user.email}
                             />
                             <CardMedia
-                                image='https://source.unsplash.com/random'
-                                title='Thiago Medeiros'
+                                image={product.user.image}
+                                title={product.user.name}
                             />
                         </Card>
                         <Box sx={box(theme.palette.background.variant, theme.spacing(3))}>
@@ -75,11 +81,25 @@ const Product = () => {
                                 Localização
                             </Typography>
                         </Box>
-
                     </Grid>
                 </Grid>
             </Container>
         </TemplateDefault>
     )
 }
+
+export async function getServerSideProps({ query }) {
+    const { id } = query;
+
+    await dbConnect();
+
+    const product = await ProductsModel.findOne({ _id: id });
+
+    return {
+        props: {
+            product: JSON.parse(JSON.stringify(product)),
+        }
+    }
+}
+
 export default Product;
