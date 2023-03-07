@@ -9,6 +9,8 @@ import ProductsModel from '@/src/models/products';
 import { formatCurrency } from '@/src/utils/currency';
 import Link from 'next/link';
 import slugify from 'slugify';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 const searchBox = (padding) => {
     return {
@@ -24,7 +26,10 @@ const cardGrid = (padding) => {
     }
 }
 const Home = ({ products }) => {
+    const [search, setSearch] = useState();
     const theme = useTheme();
+    const router = useRouter();
+
     return (
         <TemplateDefault>
             <Container maxWidth="md">
@@ -33,10 +38,15 @@ const Home = ({ products }) => {
                 </Typography>
                 <Paper sx={searchBox(theme.spacing(0, 2))}>
                     <InputBase
+                        onChange={(e) => setSearch(e.target.value)}
                         placeholder='Ex.: iPhone 12 com garantia'
                         fullWidth
                     />
-                    <IconButton>
+                    <IconButton onClick={() => {
+                        router.push({
+                            pathname: `/search/${search}`
+                        })
+                    }}>
                         <SearchIcon />
                     </IconButton>
                 </Paper>

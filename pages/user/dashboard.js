@@ -35,7 +35,6 @@ const Dashboard = ({ products }) => {
   const [removedId, setRemovedId] = useState([]);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
 
-  console.log(products);
   const handleClose = () => {
     setOpenConfirmModal(false);
   };

@@ -40,7 +40,9 @@ export default function ButtonAppBar() {
         <Container maxWidth='lg'>
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Anunx
+              <StyledLink href={'/'} passHref>
+                Anunx
+              </StyledLink>
             </Typography>
             <StyledLink href={session.data ? '/user/publish' : '/auth/signin'} passHref>
               <Button color="inherit" variant='outlined' sx={{ marginRight: '10px' }}>
